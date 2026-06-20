@@ -47,6 +47,26 @@
       --hero-bg: url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=1500&q=80');
     }
 
+    /* Dynamic Neon Button Style */
+.neon-button {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: transparent;
+}
+
+.neon-button:hover {
+    background: var(--primary-color);
+    color: #000;
+    text-shadow: none; /* Glow is replaced by solid fill on hover */
+    box-shadow: 0 0 15px var(--primary-color);
+}
+    
     [data-theme="golden-grit"] {
       --bg-color: #111;
       --primary-color: gold;
@@ -650,7 +670,12 @@
       </p>
       <p class="reveal-on-scroll">And on the road, he’s pushing control to its edge.</p>
       <p class="reveal-on-scroll">GPS-verified 179 km/h — hands-free — on a 150cc platform.</p>
-      <p class="reveal-on-scroll">Not theory. Not noise. Real runs.</p>
+      <p class="reveal-on-scroll" style="font-weight: bold; margin: 20px 0;">
+  Not theory. Not noise. Real runs. 
+  <a href="https://www.instagram.com/francisglide/" target="_blank" class="neon-button">
+    End of debate
+  </a>
+</p>
       <p class="reveal-on-scroll">Now scaling beyond it — building toward the fastest hands-free motorcycle record ever attempted, on a controlled track, at the highest level.</p>
       <p class="reveal-on-scroll">Every ride. Every page. One direction: Limits are lies.</p>
       <p class="reveal-on-scroll">
