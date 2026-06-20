@@ -1,0 +1,42 @@
+📁 louiewood/
+│
+├── 📁 books/
+│   ├── 📁 lift-the-stigma/
+│   │   └── index.html
+│   ├── 📁 louiewood-night/
+│   │   └── index.html
+│   ├── 📁 clarity-world/
+│   │   └── index.html
+│   └── ... other books
+│
+├── index.html ← your main homepage
+├── style.css
+└── etc...
+
+
+
+🧪 TEST IF IT WORKS:
+Once it's live or served locally:
+
+Visit: http://localhost:5500/books/lift-the-stigma/
+
+Or if online: https://louiewood.com/books/lift-the-stigma/
+
+
+
+📦 If You’re Using CodePen or Replit:
+You can’t make folders in CodePen — you'll need to:
+
+Switch to VS Code + Live Server setup.
+
+Or use Netlify, Vercel, or GitHub Pages later for deployment.
+
+
+🧠 Final Tip:
+This setup is the foundation for building your own Smashing Magazine-style book portal. Once your folders are in, I can help you:
+
+Generate each page’s HTML
+
+Link all books in the main carousel
+
+Add sample pages, buy buttons, etc.

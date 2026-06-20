@@ -1,0 +1,20 @@
+Bank name:
+Citibank
+
+Bank address:
+111 Wall Street New York, NY 10043 USA
+
+Routing (ABA):
+031100209
+
+SWIFT code:
+CITIUS33
+
+Account number:
+70589370002090658
+
+Account type:
+CHECKING
+
+Beneficiary name:
+Francis Louie Ramoso

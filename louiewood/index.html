@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-title" content="LouieWood" />
+  <title>Louiewood</title>
+
+  <link rel="canonical" href="https://louiewood.com/" />
+
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Cinzel:wght@700&family=Raleway:wght@600&family=Playfair+Display:wght@700&family=Pacifico&display=swap');
+
+    html, body {
+      overflow-x: hidden;
+    }
+
+    #books {
+      position: relative;
+    }
+
+    #books h2, .carousel-container {
+      position: relative;
+      z-index: 1;
+    }
+        
+    #books-matrix-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+        
+    :root {
+      --bg-color: #0d0d0d;
+      --primary-color: #00ffe1;
+      --accent-color: white;
+      --font-family: 'Orbitron', sans-serif;
+      --hero-bg: url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=1500&q=80');
+    }
+
+    [data-theme="golden-grit"] {
+      --bg-color: #111;
+      --primary-color: gold;
+      --accent-color: #fffbe6;
+      --font-family: 'Cinzel', serif;
+      --hero-bg: url('https://images.unsplash.com/photo-1579453842933-9a90b6ec9c68?auto=format&fit=crop&w=1500&q=80');
+    }
+        
+    [data-theme="earth-g"] {
+      --bg-color: #0f1a0f;
+      --primary-color: #6aff8f;
+      --accent-color: #d7e8d0;
+      --font-family: 'Raleway', sans-serif;
+      --hero-bg: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80');
+    }
+
+    [data-theme="cinematic"] {
+      --bg-color: #0e0c0c;
+      --primary-color: #ffcc70;
+      --accent-color: #ffe;
+      --font-family: 'Playfair Display', serif;
+      --hero-bg: url('https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?auto=format&fit=crop&w=1500&q=80');
+    }
+
+    [data-theme="pixie-glow"] {
+      --bg-color: #1a0026;
+      --primary-color: #d183ff;
+      --accent-color: #f3e0ff;
+      --font-family: 'Pacifico', cursive;
+      --hero-bg: url('https://images.unsplash.com/photo-1616576681832-d5a4f2efc9cb?auto=format&fit=crop&w=1500&q=80');
+    }
+
+    /* === BASE STYLES === */
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: var(--bg-color);
+      color: var(--accent-color);
+      overflow-x: hidden;
+      transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    /* === NAVIGATION === */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--primary-color);
+    }
+
+    .nav-item {
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary-color);
+      text-decoration: none;
+      position: relative;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    .nav-item:hover {
+      color: var(--primary-color);
+      text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+    }
+
+    .nav-item:hover::after {
+      width: 100%;
+    }
+
+    /* === HERO SECTION === */
+    .hero {
+      text-align: center;
+      padding: 120px 20px;
+      background: var(--hero-bg) center/cover no-repeat;
+      background-blend-mode: overlay;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .hero h1 {
+      font-size: 60px;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px var(--primary-color);
+    }
+
+    .hero p {
+      font-size: 22px;
+      color: var(--accent-color);
+      text-shadow: 0 0 10px var(--primary-color);
+    }
+
+    /* === CALL TO ACTION === */
+    .cta-section {
+      text-align: center;
+      padding: 80px 20px;
+      background: #111;
+    }
+
+    .cta-section h2 {
+      font-size: 36px;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .cta-section button {
+      font-size: 18px;
+      padding: 15px 30px;
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .cta-section button:hover {
+      background: var(--primary-color);
+      color: #000;
+      box-shadow: 0 0 10px var(--primary-color), 0 0 40px var(--primary-color);
+    }
+
+    /* === INTERACTIVE DRAGGABLE CAROUSEL STYLES === */
+    .carousel-container {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      width: 100%;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-y;
+    }
+
+    .carousel-container:active {
+      cursor: grabbing;
+    }
+
+    .carousel-track {
+      display: flex;
+      padding: 40px 0;
+      gap: 35px;
+      width: max-content;
+    }
+
+    .book-button {
+      width: 240px;
+      height: 360px;
+      padding: 12px;
+      background: #000;
+      border: 1px solid var(--primary-color);
+      border-radius: 12px;
+      display: inline-block;
+      flex: 0 0 auto;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      -webkit-user-drag: none;
+    }
+
+    .book-button img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .book-button:hover {
+      transform: scale(1.05);
+      z-index: 5;
+      animation: glowPulse 1.5s ease-in-out infinite alternate;
+    }
+
+    .book-button.core-blueprint:hover {
+      border-color: #0088ff !important;
+      transform: scale(1.05);
+      animation: bluePulseOverride 1.5s ease-in-out infinite alternate !important;
+    }
+
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 10px var(--primary-color); }
+      to { box-shadow: 0 0 30px var(--primary-color), 0 0 60px var(--primary-color); }
+    }
+
+    @keyframes bluePulseOverride {
+      from {
+        box-shadow: 0 0 20px rgba(0, 102, 255, 0.8),
+                    0 0 40px rgba(0, 102, 255, 0.4),
+                    inset 0 0 15px rgba(0, 136, 255, 0.6);
+      }
+      to {
+        box-shadow: 0 0 30px #0055ff, 
+                    0 0 60px #0033ff, 
+                    0 0 90px rgba(0, 51, 255, 0.6),
+                    inset 0 0 25px rgba(0, 136, 255, 0.9);
+      }
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: #0a0a0a;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      border-top: 1px solid var(--primary-color);
+    }
+
+    footer a {
+      color: var(--primary-color);
+      margin: 0 10px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px var(--primary-color);
+    }
+
+    /* === THEME SWITCHER === */
+    .theme-switcher {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #222;
+      padding: 10px 15px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .theme-switcher select {
+      background: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      padding: 5px;
+      border-radius: 4px;
+      font-family: var(--font-family);
+    }
+
+    /* === SCROLL REVEAL === */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === FLOATING WIDGET TERMINAL CONFIG === */
+    #louiewood-chat-trigger {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background: #000;
+      border: 2px solid var(--primary-color);
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--primary-color);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    #louiewood-chat-trigger:hover {
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: 0 0 25px var(--primary-color), inset 0 0 10px var(--primary-color);
+    }
+
+    #louiewood-chat-container {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 380px;
+      height: 520px;
+      background: rgba(10, 10, 10, 0.95);
+      border: 2px solid var(--primary-color);
+      border-radius: 14px;
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 35px rgba(0, 255, 225, 0.2);
+      font-family: var(--font-family);
+      backdrop-filter: blur(10px);
+    }
+
+    #louiewood-chat-container.active {
+      display: flex;
+      animation: terminalFadeUp 0.4s ease-out forwards;
+    }
+
+    @keyframes terminalFadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-header {
+      background: #000;
+      padding: 15px;
+      border-bottom: 1px solid var(--primary-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-title {
+      color: var(--primary-color);
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-title::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #00ff55;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00ff55;
+      animation: pulseBeacon 1.5s infinite;
+    }
+
+    @keyframes pulseBeacon {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    .chat-close-btn {
+      background: transparent;
+      border: none;
+      color: #777;
+      cursor: pointer;
+      font-size: 20px;
+      transition: color 0.2s;
+    }
+
+    .chat-close-btn:hover {
+      color: #ff3333;
+    }
+
+    .chat-feed {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+    }
+
+    .chat-feed::-webkit-scrollbar {
+      width: 4px;
+    }
+    .chat-feed::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+
+    .msg-line {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .msg-line.user {
+      align-self: flex-end;
+      background: rgba(0, 255, 225, 0.1);
+      border: 1px solid var(--primary-color);
+      color: #fff;
+    }
+
+    .msg-line.ai {
+      align-self: flex-start;
+      background: rgba(20, 20, 20, 0.8);
+      border: 1px solid #333;
+      color: #d7e8d0;
+    }
+
+    .chat-input-panel {
+      padding: 12px;
+      background: #000;
+      border-top: 1px solid #222;
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input-panel textarea {
+      flex: 1;
+      background: #0a0a0a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      resize: none;
+      height: 20px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .chat-input-panel textarea:focus {
+      border-color: var(--primary-color);
+    }
+
+    .chat-send-btn {
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      border-radius: 6px;
+      padding: 0 15px;
+      cursor: pointer;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+
+    .chat-send-btn:hover {
+      background: var(--primary-color);
+      color: #000;
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 10px;
+      }
+
+      .nav-item {
+        font-size: 16px;
+        letter-spacing: 1px;
+      }
+
+      .hero h1 { font-size: 36px; }
+      .hero p { font-size: 16px; }
+      .cta-section h2 { font-size: 24px; }
+      .cta-section button { font-size: 16px; padding: 10px 20px; }
+      .carousel-track { gap: 20px; padding: 10px 0; }
+      .book-button { width: 160px; height: 240px; }
+      footer { font-size: 12px; padding: 20px 10px; }
+      .theme-switcher { top: 10px; right: 10px; padding: 8px 10px; }
+      .theme-switcher select { font-size: 14px; padding: 4px; }
+
+      #louiewood-chat-container {
+        width: calc(100vw - 30px);
+        height: 450px;
+        right: 15px;
+        bottom: 85px;
+      }
+      #louiewood-chat-trigger {
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="default">
+
+  <div class="theme-switcher">
+    <select onchange="switchTheme(this.value)">
+      <option value="default">Neon Dynasty</option>
+      <option value="golden-grit">Golden Grit</option>
+      <option value="earth-g">Earth G</option>
+      <option value="cinematic">Cinematic</option>
+      <option value="pixie-glow">Pixie Glow</option>
+    </select>
+  </div>
+
+  <nav>
+    <a href="#home" class="nav-item">Home</a>
+    <a href="#books" class="nav-item">Books</a>
+    <a href="#author" class="nav-item">Author</a>
+    <a href="#support" class="nav-item">Support</a>
+    <a href="#story" class="nav-item">Story</a>
+  </nav>
+
+  <section id="home" class="hero">
+    <h1>LOUIEWOOD</h1>
+    <p>Home of Legends.</p>
+  </section>
+
+  <section id="support" class="cta-section">
+    <h2>Support the Movement</h2>
+    <button class="glow-on-hover">Buy a Book</button>
+    <button class="glow-on-hover" style="margin-left: 20px;">Donate via Ko-fi</button>
+  </section>
+
+  <section id="story" class="cta-section" style="background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('https://res.cloudinary.com/ddun2ykic/image/upload/v1750572246/Yacht_Journey_to_Louiewood_at_Night_1_ncspqx.png') center/cover no-repeat; padding: 100px 20px; color: var(--accent-color);">
+    <h2 style="color: var(--primary-color); font-size: 40px; margin-bottom: 40px;">The Story Behind LOUIEWOOD</h2>
+
+    <div style="max-width: 900px; margin: 0 auto; font-size: 20px; line-height: 1.8;">
+      <h3 class="reveal-on-scroll" style="color: var(--primary-color); margin-bottom: 10px;">Grit</h3>
+      <p class="reveal-on-scroll">Born in Gingoog where dirt, dusk, and dreams collide. LOUIEWOOD rose without backing — just pure hustle and a burning desire to leave a mark.</p>
+
+      <h3 class="reveal-on-scroll" style="color: var(--primary-color); margin-top: 30px; margin-bottom: 10px;">Vision</h3>
+      <p class="reveal-on-scroll">This ain’t just a site. It's a living beacon for voices that don’t get heard. Every element, every line of code, every font glow — it’s all part of a movement.</p>
+
+      <h3 class="reveal-on-scroll" style="color: var(--primary-color); margin-top: 30px; margin-bottom: 10px;">The Movement</h3>
+      <p class="reveal-on-scroll">LOUIEWOOD is home for the rebels, the authors, the unfiltered minds. A neon-lit path for anyone told “you can’t.” You can. And we did.</p>
+
+      <p class="reveal-on-scroll" style="margin-top: 30px; font-size: 22px; text-align: center;">
+        <strong style="color: var(--primary-color); text-shadow: 0 0 10px var(--primary-color);">
+          “Even if they never gave you a shot — build your own stage.”
+        </strong>
+      </p>
+
+      <div class="reveal-on-scroll" style="text-align: center; margin-top: 40px;">
+        <a href="#support">
+          <button class="glow-on-hover" style="padding: 14px 32px; font-size: 18px; border: 2px solid var(--primary-color); background: transparent; color: var(--primary-color); border-radius: 8px; cursor: pointer;">
+            Read The Manifesto
+          </button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="books" class="cta-section" style="background: none; padding: 120px 0; min-height: 700px;">
+    <canvas id="books-matrix-canvas"></canvas>
+    <h2 style="color: var(--primary-color); font-size: 36px; text-align: center; margin-bottom: 40px;">Featured Books</h2>
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <a href="/books/healing-the-republic/" class="book-button core-blueprint">
+          <img src="https://res.cloudinary.com/dhk6otbuh/image/upload/v1780417420/Healing_the_Republic_Front_cover_wxqw0c.png" alt="Healing The Republic">
+        </a>
+        <a href="/books/lift-the-stigma-ph/" class="book-button">
+          <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750524537/Lift_the_stigma_ph_cover_vkd5zq.jpg" alt="Lift The Stigma">
+        </a>
+        <a href="/books/louiewood-from-gingoog-dirt-to-global-dynasty/" class="book-button">
+          <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750518735/LOUIEWOOD__A_Night_to_Remember_ozo3kc.png" alt="A Night to Remember">
+        </a>
+        <a href="/books/louiewood-the-cinematic-companion/" class="book-button">
+          <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750527653/for_cover_xq1xto.jpg" alt="For Cover">
+        </a>
+        <a href="/books/faith-unleashed-the-journey-beyond-limits/" class="book-button">
+          <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750527579/ChatGPT_Image_May_30_2025_11_33_49_AM_gq1ikk.png" alt="Faith Unleashed">
+        </a>
+        <a href="/books/clarity-in-a-country-of-noise/" class="book-button">
+          <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750735807/Clarity_in_a_Noise-filled_World_v4f9oe.png" alt="Clarity in a Noise-filled World">
+        </a>
+        <a href="/books/mastering-the-art-of-not-quitting/" class="book-button">
+          <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750527557/ChatGPT_Image_May_30_2025_09_27_05_PM_a2kzmq.png" alt="Mastering the Art of Not Quitting">
+        </a>
+        <a href="/books/visionary-thinking-unleashed/" class="book-button">
+          <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750527499/Visionary_Thinking_Unleashed_da6gx4.jpg" alt="Visionary Thinking Unleashed">
+        </a>
+        <a href="/books/edge-of-control-where-mindset-becomes-survival/" class="book-button">
+          <img src="https://res.cloudinary.com/dhk6otbuh/image/upload/w_300,h_450,c_fill,q_auto,f_auto/v1776750507/Edge_of_Control_Where_Mindset_Becoms_Survival_xjjlv2.png" alt="Edge of Control: Where Mindset Becomes Survival">
+        </a>
+        <a href="/books/too-real-to-recognize-too-bold-to-erase-the-stunt-they-tried-to-bury/" class="book-button">
+          <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750524565/The_Founder_dgpzbj.png" alt="The Founder">
+        </a>
+        <a href="/books/handsfree-the-discipline-of-control/" class="book-button">
+          <img src="https://res.cloudinary.com/dhk6otbuh/image/upload/w_300,h_450,c_fill,q_auto,f_auto/v1776733633/file-original_yutcbe.png" alt="Handsfree: The Discipline of Control">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="author" class="cta-section" style="background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://res.cloudinary.com/ddun2ykic/image/upload/v1750534793/Serene_Evening_by_Louiewood_Shores_2_tcw3ya.png') center/cover no-repeat;">
+    <h2 style="color: var(--primary-color); font-size: 40px;">About the Author</h2>
+    <div style="max-width: 900px; margin: 0 auto; text-align: left; font-size: 18px; line-height: 1.8;">
+      <p class="reveal-on-scroll">
+        <strong style="color: var(--primary-color); font-size: 22px;">Francis Louie</strong> didn’t wait for doors to open — he built the road himself. Raised in Gingoog with nothing but grit, grief, and guts, he turned every “no” into fuel. What started in the dirt is now building a dynasty.
+      </p>
+      <p class="reveal-on-scroll">
+        He’s not just a writer — he’s a signal. His books and platforms under LOUIEWOOD aren’t content; they’re pressure. Built for those who refuse to stay small.
+      </p>
+      <p class="reveal-on-scroll">And on the road, he’s pushing control to its edge.</p>
+      <p class="reveal-on-scroll">GPS-verified 179 km/h — hands-free — on a 150cc platform.</p>
+      <p class="reveal-on-scroll">Not theory. Not noise. Real runs.</p>
+      <p class="reveal-on-scroll">Now scaling beyond it — building toward the fastest hands-free motorcycle record ever attempted, on a controlled track, at the highest level.</p>
+      <p class="reveal-on-scroll">Every ride. Every page. One direction: Limits are lies.</p>
+      <p class="reveal-on-scroll">
+        <strong style="color: var(--primary-color); font-size: 18px;">“I’m not here to be famous. I’m here to be felt.”</strong> — F.L.R.
+      </p>
+      <div class="reveal-on-scroll" style="margin-top: 30px; text-align: center;">
+        <a href="#books">
+          <button class="glow-on-hover" style="padding: 14px 32px; font-size: 18px; border: 2px solid var(--primary-color); background: transparent; color: var(--primary-color); border-radius: 8px; cursor: pointer;">
+            Explore His Works
+          </button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025-2026 LOUIEWOOD. All Rights Reserved.</p>
+    <p>
+      <a href="https://www.facebook.com/profile.php?id=61575974443144" target="_blank">Facebook</a> |
+      <a href="https://www.instagram.com/loouiewood" target="_blank">Instagram</a> |
+      <a href="https://youtube.com/@louiiewood" target="_blank">YouTube</a> |
+      <a href="https://ph.pinterest.com/Louiiewood/" target="_blank">Pinterest</a> |
+      <a href="https://ko-fi.com/louiewood" target="_blank">Ko-fi</a> |
+      <a href="https://x.com/Louiiewood" target="_blank">X</a> |
+      <a href="https://louiewood.gumroad.com" target="_blank">Gumroad</a>
+    </p>
+  </footer>
+
+  <div id="louiewood-chat-trigger" title="Open Terminal">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </div>
+
+  <div id="louiewood-chat-container">
+    <div class="chat-header">
+      <div class="chat-title">LW-Core Engine v3</div>
+      <button class="chat-close-btn" id="close-lw-chat">&times;</button>
+    </div>
+    <div class="chat-feed" id="lw-chat-feed">
+      <div class="msg-line ai">Welcome to the LOUIEWOOD Mainframe Core. Interrogate this terminal regarding our sovereign infrastructure, distributed blueprints, or global rollout strategies. What operation are we auditing today?</div>
+    </div>
+    <div class="chat-input-panel">
+      <textarea id="lw-chat-input" placeholder="Enter transmission..." rows="1"></textarea>
+      <button class="chat-send-btn" id="lw-send-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function switchTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      localStorage.setItem('louiewood-theme', theme);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('louiewood-theme');
+      if (savedTheme) document.body.setAttribute('data-theme', savedTheme);
+    });
+
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 50) {
+          el.classList.add('visible');
+        }
+      });
+    });
+  </script>
+
+  <script>
+    const booksCanvas = document.getElementById("books-matrix-canvas");
+    const ctx = booksCanvas.getContext("2d");
+
+    let isHoveringCoreBlueprint = false;
+
+    function resizeBooksCanvas() {
+      const booksSection = document.getElementById("books");
+      booksCanvas.width = booksSection.offsetWidth;
+      booksCanvas.height = booksSection.offsetHeight;
+    }
+
+    window.addEventListener("resize", resizeBooksCanvas);
+    resizeBooksCanvas();
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@&%abcdefghijklmnopqrstuvwxyzΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικμνξοπρσςτυφχψω一二三四五六七八九十人口女子日月木水火土金大小中上下左右我你他她它我们你们他们是有不在来去的了吗呢 and 也也会要很';
+    const fontSize = 14;
+    let columns = booksCanvas.width / fontSize;
+    let drops = [];
+
+    for (let x = 0; x < columns; x++) {
+      drops[x] = Math.random() * booksCanvas.height;
+    }
+
+    function drawBooksMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, booksCanvas.width, booksCanvas.height);
+      
+      if (isHoveringCoreBlueprint) {
+        ctx.fillStyle = "#0055ff"; 
+      } else {
+        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--primary-color').trim() || '#00ffe1';
+      }
+      
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        let text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > booksCanvas.height && Math.random() > 0.975)
+          drops[i] = 0;
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawBooksMatrix, 35);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const coreBtn = document.querySelector('.book-button.core-blueprint');
+      if (coreBtn) {
+        coreBtn.addEventListener('mouseenter', () => { isHoveringCoreBlueprint = true; });
+        coreBtn.addEventListener('mouseleave', () => { isHoveringCoreBlueprint = false; });
+      }
+    });
+  </script>
+
+  <script>
+    const container = document.querySelector('.carousel-container');
+    const track = document.querySelector('.carousel-track');
+
+    const items = Array.from(track.children);
+    items.forEach(item => {
+      const clone = item.cloneNode(true);
+      track.appendChild(clone);
+    });
+
+    const scrollSpeed = 1; 
+    let isCarouselPaused = false; 
+    let isDragging = false;
+    let startX, startScrollLeft;
+    let dragDistance = 0;
+    let initialPageX = 0;
+
+    function autoScroll() {
+      if (!isCarouselPaused && !isDragging) {
+        container.scrollLeft += scrollSpeed;
+        if (container.scrollLeft >= track.scrollWidth / 2) {
+          container.scrollLeft = 0;
+        }
+      }
+      requestAnimationFrame(autoScroll);
+    }
+    autoScroll();
+
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      dragDistance = 0;
+      initialPageX = e.pageX;
+      startX = e.pageX - container.offsetLeft;
+      startScrollLeft = container.scrollLeft;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5; 
+      dragDistance = Math.abs(e.pageX - initialPageX);
+      container.scrollLeft = startScrollLeft - walk;
+      checkBoundaries(e.pageX);
+    });
+
+    container.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      dragDistance = 0;
+      initialPageX = e.touches[0].pageX;
+      startX = e.touches[0].pageX - container.offsetLeft;
+      startScrollLeft = container.scrollLeft;
+      isCarouselPaused = true; 
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5; 
+      dragDistance = Math.abs(e.touches[0].pageX - initialPageX);
+      container.scrollLeft = startScrollLeft - walk;
+      checkBoundaries(e.touches[0].pageX);
+    }, { passive: true });
+
+    const endDragAction = () => {
+      setTimeout(() => { 
+        isDragging = false; 
+        isCarouselPaused = false; 
+      }, 50);
+    };
+    window.addEventListener('mouseup', endDragAction);
+    window.addEventListener('touchend', endDragAction);
+
+    function checkBoundaries(currentX) {
+      if (container.scrollLeft >= track.scrollWidth / 2) {
+        container.scrollLeft -= track.scrollWidth / 2;
+        startScrollLeft = container.scrollLeft;
+        startX = currentX - container.offsetLeft;
+      } else if (container.scrollLeft <= 0) {
+        container.scrollLeft += track.scrollWidth / 2;
+        startScrollLeft = container.scrollLeft;
+        startX = currentX - container.offsetLeft;
+      }
+    }
+
+    track.addEventListener('mouseenter', (e) => {
+      if (e.target.closest('.book-button')) isCarouselPaused = true;
+    }, true);
+
+    track.addEventListener('mouseleave', (e) => {
+      if (e.target.closest('.book-button')) isCarouselPaused = false;
+    }, true);
+
+    track.addEventListener('click', (e) => {
+      if (dragDistance > 15) {
+        e.preventDefault(); 
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const allBlueprintNodes = document.querySelectorAll('.book-button.core-blueprint');
+        allBlueprintNodes.forEach(node => {
+          node.addEventListener('mouseenter', () => { isHoveringCoreBlueprint = true; });
+          node.addEventListener('mouseleave', () => { isHoveringCoreBlueprint = false; });
+        });
+      }, 300);
+    });
+  </script>
+
+<script>
+    const WORKER_ENDPOINT = "https://odd-wind-c8ad.louiewoodlegacy.workers.dev"; 
+    
+    // LW-CORE ENGINE: MINIMALIST BUFFER (KEYBOARD-ONLY) - REINFORCED
+    const COMMANDS = ['status', 'manifesto', 'protocol179', 'archive', 'clear', 'help', 'history'];
+    let commandHistory = [];
+    let historyIndex = -1;
+    let conversationHistory = [];
+
+    const chatTrigger = document.getElementById('louiewood-chat-trigger');
+    const chatContainer = document.getElementById('louiewood-chat-container');
+    const closeChat = document.getElementById('close-lw-chat');
+    const chatFeed = document.getElementById('lw-chat-feed');
+    const chatInput = document.getElementById('lw-chat-input');
+    const sendBtn = document.getElementById('lw-send-btn');
+
+    // UI UTILITY
+    chatTrigger.addEventListener('click', () => {
+      chatContainer.classList.toggle('active');
+      if (chatContainer.classList.contains('active')) chatInput.focus();
+    });
+
+    closeChat.addEventListener('click', () => chatContainer.classList.remove('active'));
+
+    function appendMsgLine(text, role) {
+      const el = document.createElement('div');
+      el.classList.add('msg-line', role);
+      el.textContent = text;
+      chatFeed.appendChild(el);
+      chatFeed.scrollTop = chatFeed.scrollHeight; 
+    }
+
+    // REINFORCED EXECUTION PIPELINE
+    const executeCommand = async () => {
+      const cmd = chatInput.value.trim();
+      if (!cmd) return;
+
+      // Local terminal clear intercept
+      if (cmd.toLowerCase() === 'clear') {
+        chatFeed.innerHTML = '';
+        appendMsgLine("Terminal logs wiped. System clear.", "ai");
+        chatInput.value = '';
+        return;
+      }
+
+      commandHistory.push(cmd);
+      if (commandHistory.length > 20) commandHistory.shift();
+      historyIndex = -1;
+      
+      // DISPATCH TO ENGINE
+      appendMsgLine(cmd, 'user');
+      chatInput.value = '';
+
+      const loader = document.createElement('div');
+      loader.classList.add('msg-line', 'ai');
+      loader.textContent = "Processing transmission...";
+      chatFeed.appendChild(loader);
+      chatFeed.scrollTop = chatFeed.scrollHeight;
+
+      try {
+        const response = await fetch(WORKER_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: cmd, history: conversationHistory })
+        });
+
+        if (chatFeed.contains(loader)) chatFeed.removeChild(loader);
+
+        if (!response.ok) throw new Error(`Transmission failed. Status: ${response.status}`);
+        
+        const data = await response.json();
+        
+        // 🌟 FALLBACK FIX: Checks data.reply, data.response, and data.text 🌟
+        const aiReply = data.reply || data.response || data.text || "Transmission payload received, but text key is unrecognized.";
+        
+        appendMsgLine(aiReply, 'ai');
+        conversationHistory.push({ role: 'user', content: cmd }, { role: 'assistant', content: aiReply });
+      } catch (err) {
+        if (chatFeed.contains(loader)) chatFeed.removeChild(loader);
+        appendMsgLine(`[SYSTEM_ERROR]: ${err.message}`, 'ai');
+      }
+    };
+
+    // INPUT LISTENERS
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const input = e.target.value.trim().toLowerCase();
+        const match = COMMANDS.find(cmd => cmd.startsWith(input));
+        if (match) e.target.value = match;
+      }
+
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (commandHistory.length === 0) return;
+        historyIndex = (e.key === 'ArrowUp') 
+          ? (historyIndex <= 0 ? commandHistory.length - 1 : historyIndex - 1)
+          : (historyIndex >= commandHistory.length - 1 ? 0 : historyIndex + 1);
+        chatInput.value = commandHistory[historyIndex];
+      }
+
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        executeCommand();
+      }
+    });
+
+    sendBtn.addEventListener('click', executeCommand);
+  </script>
+</body>
+</html>
