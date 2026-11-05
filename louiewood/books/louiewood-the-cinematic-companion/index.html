@@ -3,70 +3,355 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LOUIEWOOD: The Cinematic Companion</title>
+  <title>LOUIEWOOD: The Cinematic Companion | LOUIEWOOD</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
   <style>
-    body {
+    :root {
+      --bg-color: #050505;
+      --surface-color: #111111;
+      --text-main: #f4f4f4;
+      --text-muted: #888888;
+      --border-color: #222222;
+      --accent-color: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background: black;
-      color: #00ffe1;
-      font-family: 'Orbitron', sans-serif;
-      padding: 80px 20px;
+      padding: 0;
     }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    img {
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* NAVIGATION */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 5%;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(5, 5, 5, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 2px;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-left: 30px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* PRODUCT SECTION */
+    .product-container {
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 0 5%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 60px;
+      align-items: center;
+    }
+
+    /* LEFT SIDE: 3D PHYSICAL BOOK VISUAL */
+    .book-visual {
+      flex: 1 1 400px;
+      display: flex;
+      justify-content: center;
+      perspective: 2000px; 
+      padding: 40px 0;
+    }
+
+    .book-3d {
+      position: relative;
       width: 100%;
-      max-width: 400px;
-      border: 4px solid #00ffe1;
-      margin-bottom: 40px;
+      max-width: 340px;
+      cursor: pointer;
+      transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform-style: preserve-3d;
+      transform: rotateX(20deg) rotateY(-15deg) translateZ(0px);
     }
-    h1 {
-      font-size: 36px;
+
+    .book-cover-front {
+      width: 100%;
+      display: block;
+      border-radius: 2px 5px 5px 2px; 
+      box-shadow: inset 2px 0 5px rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .book-spine {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 30px; 
+      height: 100%;
+      background: linear-gradient(to right, #1a1a1a, #333333, #1a1a1a);
+      transform: rotateY(-90deg) translateX(-15px);
+      transform-origin: left center;
+      border-radius: 3px 0 0 3px;
+      z-index: 1;
+      border-left: 2px solid #000; 
+    }
+
+    .book-pages {
+      position: absolute;
+      top: 2%;
+      right: 0;
+      width: 25px;
+      height: 96%;
+      background: #e8e8e8;
+      transform: rotateY(90deg) translateX(12px);
+      transform-origin: right center;
+      border-radius: 0 3px 3px 0;
+      z-index: 1;
+      background-image: repeating-linear-gradient(to bottom, #ddd, #fff 2px, #ddd 3px);
+    }
+
+    .book-shadow {
+      position: absolute;
+      bottom: -30px;
+      left: 10%;
+      width: 90%;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      filter: blur(15px);
+      transform: rotateX(90deg) translateZ(-20px);
+      z-index: 0;
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .book-3d:hover {
+      transform: rotateX(0deg) rotateY(0deg) translateZ(20px);
+    }
+
+    .book-3d:hover .book-shadow {
+      width: 70%;
+      left: 15%;
+      opacity: 0.5;
+      filter: blur(10px);
+      transform: rotateX(90deg) translateZ(-10px);
+    }
+
+    /* RIGHT SIDE: DETAILS & BUY */
+    .book-details {
+      flex: 1 1 400px;
+    }
+
+    .book-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 54px);
+      line-height: 1.1;
+      margin-bottom: 15px;
+    }
+
+    .book-author {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      display: block;
+    }
+
+    .description {
+      font-size: 16px;
+      color: #cccccc;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    /* THE BUY BOX */
+    .buy-box {
+      border: 1px solid var(--border-color);
+      background: var(--surface-color);
+      padding: 30px;
+      border-radius: 4px;
+      margin-bottom: 30px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .price {
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .format-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid var(--border-color);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .buy-btn {
+      display: block;
+      width: 100%;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      text-align: center;
+      padding: 18px;
+      font-weight: 600;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .buy-btn:hover {
+      background: #cccccc;
+    }
+
+    /* SECONDARY LINKS */
+    .secondary-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .secondary-btn {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: underline;
+      transition: color 0.2s ease;
+    }
+
+    .secondary-btn:hover {
+      color: var(--text-main);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 60px 5%;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .footer-info {
+      font-size: 13px;
+      color: #555;
       margin-bottom: 10px;
     }
-    p.description {
-      font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 40px;
-    }
-    .buttons {
-      margin-top: 30px;
-    }
-    a.button {
-      display: inline-block;
-      padding: 14px 30px;
-      border: 2px solid #00ffe1;
-      color: #00ffe1;
-      text-decoration: none;
-      border-radius: 8px;
-      margin: 10px;
-      transition: all 0.3s ease;
-    }
-    a.button:hover {
-      background: #00ffe1;
-      color: black;
-      box-shadow: 0 0 10px #00ffe1;
+
+    @media (max-width: 768px) {
+      .product-container {
+        flex-direction: column;
+        margin: 40px auto;
+      }
+      .book-visual {
+        width: 100%;
+      }
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .nav-links a {
+        margin: 0 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750527653/for_cover_xq1xto.jpg">
-    <h1>LOUIEWOOD: The Cinematic Companion</h1>
-    <p class="description">
-      This is more than a companion. <br>
-it's the visual heartbeat of a revolution. LOUIEWOOD: The Cinematic Companion takes you behind the scenes of a dream forged in silence, struggle, and sky-high ambition. From untold stories to legendary frames, this is where vision meets vibe, and every page hits like a scene from your favorite film.
 
-    </p>
-    <div class="buttons">
-  <<a class="button" href="https://play.google.com/store/books/details?id=5yPtEQAAQBAJ">📖 Read The Book</a>
-  <a class="button" href="https://www.lulu.com/shop/francis-louie-ramoso/louiewood-the-cinematic-companion/paperback/product-p698rgm.html?q=francis+louie&page=1&pageSize=4" target="https://www.lulu.com/shop/francis-louie-ramoso/louiewood-the-cinematic-companion/paperback/product-p698rgm.html?q=francis+louie&page=1&pageSize=4">Buy Physical Copy</a>
-  <a class="button" href="/index.html">← Back to Louiewood</a>
-</div>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo"><a href="/">LOUIEWOOD</a></div>
+    <div class="nav-links">
+      <a href="/#library">Library</a>
+      <a href="/#about">About</a>
+    </div>
+  </nav>
+
+  <!-- PRODUCT CONTAINER -->
+  <div class="product-container">
+    
+    <!-- LEFT: 3D PHYSICAL BOOK -->
+    <div class="book-visual">
+      <div class="book-3d">
+        <div class="book-spine"></div>
+        <div class="book-pages"></div>
+        
+        <!-- IMAGE LINK FOR THE CINEMATIC COMPANION -->
+        <img src="https://res.cloudinary.com/ddun2ykic/image/upload/v1750527653/for_cover_xq1xto.jpg" alt="LOUIEWOOD: The Cinematic Companion" class="book-cover-front">
+        
+        <div class="book-shadow"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: DETAILS -->
+    <div class="book-details">
+      <h1 class="book-title">LOUIEWOOD: The Cinematic Companion</h1>
+      <span class="book-author">By Francis Louie Ramoso</span>
+      
+      <p class="description">
+        This is more than a companion. <br><br>
+        It's the visual heartbeat of a revolution. <em>LOUIEWOOD: The Cinematic Companion</em> takes you behind the scenes of a dream forged in silence, struggle, and sky-high ambition. From untold stories to legendary frames, this is where vision meets vibe, and every page hits like a scene from your favorite film.
+      </p>
+
+      <!-- THE BUY BOX -->
+      <div class="buy-box">
+        <div class="price-row">
+          <!-- YOU CAN CHANGE THIS PRICE LATER IF YOU WANT -->
+          <span class="price">₱499</span>
+          <span class="format-label">Digital PDF</span>
+        </div>
+        
+        <!-- REPLACE # WITH YOUR PAYMONGO LINK LATER -->
+        <a href="#" class="buy-btn">Buy PDF Now</a>
+      </div>
+
+      <!-- SECONDARY OPTIONS -->
+      <div class="secondary-links">
+        <a href="https://play.google.com/store/books/details?id=5yPtEQAAQBAJ" target="_blank" class="secondary-btn">Read on Google Play</a>
+        <a href="https://www.lulu.com/shop/francis-louie-ramoso/louiewood-the-cinematic-companion/paperback/product-p698rgm.html" target="_blank" class="secondary-btn">Buy Paperback on Lulu</a>
+      </div>
+    </div>
 
   </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-info">
+      Secure checkout via GCash, Maya, or Credit Card.
+    </div>
+    <div class="footer-info">
+      &copy; 2025-2026 LOUIEWOOD. All Rights Reserved.
+    </div>
+  </footer>
+
 </body>
 </html>
