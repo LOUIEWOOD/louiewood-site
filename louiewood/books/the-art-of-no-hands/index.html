@@ -56,7 +56,7 @@
     }
 
     /* =========================================
-       THE PERFECT 3D SPINNING BOOK
+       THE PERFECT 3D SPINNING BOOK (IMG TAGS)
        ========================================= */
     .book-visual {
       flex: 1 1 400px;
@@ -72,7 +72,6 @@
       width: 320px;
       height: 480px;
       transform-style: preserve-3d;
-      /* Tilt so we can see the spine and the pages */
       transform: rotateX(15deg) rotateY(-20deg);
       animation: spin 15s infinite linear;
     }
@@ -91,15 +90,13 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      /* YOUR THE ART OF NO HANDS FRONT COVER */
-      background-image: url('https://res.cloudinary.com/noykxs5v/image/upload/v1784905046/Front_cover_g9hgh1.png');
-      background-size: cover;
-      background-position: center;
+      object-fit: cover;
       border-radius: 2px 6px 6px 2px; 
       transform: translateZ(4px); 
       box-shadow: inset 4px 0 15px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.9);
       backface-visibility: hidden;
       z-index: 3;
+      border: 1px solid #333; /* Added border so you can see it */
     }
 
     /* 2. The Back Cover */
@@ -107,15 +104,13 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      /* Note: You didn't give me the back cover for this one, so it defaults to black */
-      background-color: #111;
-      background-size: cover;
-      background-position: center;
+      object-fit: cover;
       border-radius: 6px 2px 2px 6px;
       transform: rotateY(180deg) translateZ(4px);
       box-shadow: inset -4px 0 15px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.9);
       backface-visibility: hidden;
       z-index: 2;
+      border: 1px solid #333; /* Added border so you can see it */
     }
 
     /* 3. The Spine (Thickness) */
@@ -125,11 +120,11 @@
       left: -4px; 
       width: 8px; 
       height: 100%;
-      /* Note: You didn't give me the spine for this one, so it defaults to black */
-      background: #0a0a0a; 
+      object-fit: cover;
       transform: rotateY(-90deg);
       box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
       z-index: 3;
+      border: 1px solid #333; /* Added border so you can see it */
     }
 
     /* 4. The White Pages (Right Edge) */
@@ -284,16 +279,16 @@
     
     <!-- LEFT: 3D SPINNING BOOK -->
     <div class="book-visual">
-      
       <div class="book-box">
-        <div class="book-front"></div>
-        <div class="book-back"></div>
-        <div class="book-spine"></div>
+        <!-- USING IMG TAGS INSTEAD OF CSS BACKGROUNDS -->
+        <img src="https://res.cloudinary.com/noykxs5v/image/upload/v1784905046/Front_cover_g9hgh1.png" class="book-front" alt="Front">
+        <img src="https://res.cloudinary.com/noykxs5v/image/upload/v1794227862/Back_Cover_h26imb.png" class="book-back" alt="Back">
+        <img src="https://res.cloudinary.com/noykxs5v/image/upload/v1794228007/spine_nctlru.jpg" class="book-spine" alt="Spine">
+        
         <div class="book-pages"></div>
         <div class="book-top"></div>
         <div class="book-bottom"></div>
       </div>
-
     </div>
 
     <!-- RIGHT: DETAILS -->
@@ -312,7 +307,6 @@
           <span class="format-label">Digital PDF</span>
         </div>
         
-        <!-- YOUR CORRECT GUMROAD LINK FOR ART OF NO HANDS -->
         <a href="https://louiewood.gumroad.com/l/gaokxq" target="_blank" class="buy-btn">Access the Manuscript</a>
       </div>
 
