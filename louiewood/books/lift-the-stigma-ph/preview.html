@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Preview – Lift the Stigma</title>
+  <title>Preview – Lift The Stigma PH</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: #050505; /* LOUIEWOOD Dark Theme */
+      background: #050505;
       color: #f4f4f4;
       margin: 0;
       padding: 0;
@@ -22,7 +22,6 @@
       min-height: 100vh;
     }
 
-    /* Top Nav */
     .top-nav {
       padding: 20px 5%;
       border-bottom: 1px solid #222;
@@ -34,7 +33,6 @@
     .top-nav a { color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; }
     .top-nav a:hover { color: #888; }
 
-    /* PDF Container */
     .reader-wrap {
       flex: 1;
       display: flex;
@@ -50,7 +48,6 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.9);
       border: 1px solid #222;
       background: #fff;
-      /* This makes it big on desktop but fits mobile */
       width: 100%; 
       max-width: 900px; 
     }
@@ -61,7 +58,6 @@
       height: auto;
     }
 
-    /* Navigation Buttons */
     button.nav {
       position: absolute;
       top: 50%;
@@ -75,7 +71,7 @@
       cursor: pointer;
       z-index: 10;
       transition: all 0.3s;
-      border-radius: 50%; /* Circle buttons */
+      border-radius: 50%; 
       display: flex;
       justify-content: center;
       align-items: center;
@@ -86,14 +82,12 @@
     button.left { left: -25px; }
     button.right { right: -25px; }
 
-    /* Mobile adjustments for buttons */
     @media (max-width: 768px) {
       button.left { left: 10px; }
       button.right { right: 10px; }
       button.nav { width: 40px; height: 40px; font-size: 18px; }
     }
 
-    /* Page Info */
     #page-info {
       font-size: 13px;
       color: #888;
@@ -103,11 +97,10 @@
       font-weight: 600;
     }
 
-    /* THE PAYWALL OVERLAY */
     .overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(5, 5, 5, 0.98); /* Dark blur effect */
+      background: rgba(5, 5, 5, 0.98); 
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -166,18 +159,16 @@
     <div id="page-info">Page 1</div>
   </div>
 
-  <!-- THE LOCK (Hidden by default) -->
   <div id="locked" class="overlay" style="display:none;">
     <h2>Preview Limit Reached</h2>
-    <p>You have reached the end of the free sample. To continue reading the full manuscript and access the systemic truths inside, please secure your copy.</p>
+    <p>You have reached the end of the free sample. To continue reading the full manuscript, please secure your copy.</p>
     
-    <!-- POINT THIS TO YOUR GUMROAD LINK -->
-    <a href="https://louiewood.gumroad.com/l/umyiz" target="_blank">Buy the Full PDF (₱99.99)</a>
+    <!-- YOUR GUMROAD LINK FOR LIFT THE STIGMA -->
+    <a href="https://louiewood.gumroad.com/l/umyiz" target="_blank">Access the Full PDF (₱99.99)</a>
   </div>
 
   <script>
-    // 1. SET YOUR PREVIEW LIMIT HERE (e.g., stop after page 5)
-    const PREVIEW_LIMIT = 5; 
+    let PREVIEW_LIMIT = 5; // Default fallback
     const url = "./lift-the-stigma-ph.pdf"; 
 
     const canvas = document.getElementById("pdf-canvas");
@@ -189,27 +180,26 @@
     let pageNum = 1;
     let isLocked = false;
 
-    // 2. PREVENT RIGHT-CLICK SAVING ON THE CANVAS
     canvas.addEventListener('contextmenu', event => event.preventDefault());
 
-    // Load PDF
     pdfjsLib.getDocument(url).promise.then(function(pdf) {
       pdfDoc = pdf;
+      
+      // AUTO-CALCULATE 15% LIMIT
+      PREVIEW_LIMIT = Math.max(3, Math.ceil(pdfDoc.numPages * 0.15)); 
+      
       renderPage();
     });
 
     function renderPage() {
       pdfDoc.getPage(pageNum).then(function(page) {
         
-        // This ensures the PDF scales sharply on high-res screens
         const containerWidth = document.querySelector('.canvas-container').clientWidth;
         const viewport = page.getViewport({ scale: 1.0 });
         
-        // Calculate scale to fit the container width perfectly
         const scale = containerWidth / viewport.width;
         const scaledViewport = page.getViewport({ scale: scale });
 
-        // Get device pixel ratio for crisp text on phones/Macs
         const outputScale = window.devicePixelRatio || 1;
 
         canvas.width = Math.floor(scaledViewport.width * outputScale);
@@ -228,8 +218,6 @@
         page.render(renderContext);
         
         document.getElementById("page-info").textContent = `Page ${pageNum} of ${pdfDoc.numPages}`;
-        
-        // Disable prev button on page 1
         prevBtn.disabled = (pageNum === 1);
       });
     }
@@ -252,7 +240,6 @@
       }
     });
 
-    // Keyboard navigation
     document.addEventListener("keydown", function(event) {
       if (isLocked) return; 
       if (event.key === "ArrowRight") {
