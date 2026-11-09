@@ -1,187 +1,241 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Preview – Lift the Stigma</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f9f9f9;
+      font-family: 'Inter', sans-serif;
+      background: #050505; /* LOUIEWOOD Dark Theme */
+      color: #f4f4f4;
       text-align: center;
       padding: 1rem;
+      margin: 0;
+      overflow-x: hidden;
     }
+
+    /* Top Nav */
+    .top-nav {
+      padding: 20px;
+      border-bottom: 1px solid #222;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+    }
+    .top-nav a { color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; }
+    .top-nav a:hover { color: #888; }
+
+    .canvas-container {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      border: 1px solid #222;
+      background: #fff; /* PDF pages need a white background behind them */
+    }
+
     canvas {
       display: block;
-      margin: 1rem auto;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      background: white;
+      max-width: 100%; /* Mobile responsive */
+      height: auto;
     }
-    .controls {
-      margin-top: 20px;
+
+    /* Navigation Buttons */
+    button.nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.3s;
+      border-radius: 4px;
       display: flex;
       justify-content: center;
-      gap: 20px;
       align-items: center;
     }
-    button {
-      background: black;
-      color: white;
-      border: 2px solid #00ffe1;
-      padding: 8px 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      background: #00ffe1;
-      color: black;
-    }
+    button.nav:hover { background: #fff; color: #000; }
+    button.left { left: 10px; }
+    button.right { right: 10px; }
+
+    /* Page Info */
     #page-info {
-      font-weight: bold;
-      color: #333;
+      font-size: 13px;
+      color: #888;
+      margin-top: 15px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
+
+    /* THE PAYWALL OVERLAY */
     .overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(5, 5, 5, 0.95); /* Dark blur effect */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 100;
+      padding: 20px;
+      text-align: center;
     }
+    
+    .overlay h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    
+    .overlay p {
+      color: #888;
+      max-width: 400px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
     .overlay a {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: black;
-      color: white;
+      padding: 16px 32px;
+      background: #ffffff;
+      color: #000000;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: background 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-
-body {
-  text-align: center;
-}
-
-.canvas-container {
-  position: relative;
-  display: inline-block;
-}
-
-button.nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  font-size: 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background 0.3s ease;
-}
-
-button.nav:hover {
-  background: #00ffe1;
-  color: black;
-}
-
-button.left {
-  left: 5px; /* Inside the canvas */
-}
-
-button.right {
-  right: 5px;
-}
+    .overlay a:hover { background: #cccccc; }
 
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
-<div class="canvas-container">
-  <canvas id="pdf-canvas"></canvas>
-<button id="prevBtn" class="nav left">❮</button>
-<button id="nextBtn" class="nav right">❯</button>
-</div>
+  <div class="top-nav">
+    <a href="/books/lift-the-stigma-ph/">&larr; Back to Book Page</a>
+    <a href="/">LOUIEWOOD</a>
+  </div>
 
+  <div class="canvas-container">
+    <canvas id="pdf-canvas"></canvas>
+    <button id="prevBtn" class="nav left">❮</button>
+    <button id="nextBtn" class="nav right">❯</button>
+  </div>
 
-<div id="page-info">Page 1</div>
+  <div id="page-info">Page 1</div>
 
+  <!-- THE LOCK (Hidden by default) -->
   <div id="locked" class="overlay" style="display:none;">
     <h2>Preview Limit Reached</h2>
-    <p>This is just a preview of the book.</p>
-    <a href="/payments/buy.html">Buy the Full Book</a>
+    <p>You have reached the end of the free sample. To continue reading the full manuscript and access the systemic truths inside, please secure your copy.</p>
+    
+    <!-- POINT THIS TO YOUR GUMROAD LINK -->
+    <a href="https://louiewood.gumroad.com/l/umyiz" target="_blank">Buy the Full PDF (₱99.99)</a>
   </div>
 
   <script>
-    const url = "./lift-the-stigma-ph.pdf"; // PDF location
+    // 1. SET YOUR PREVIEW LIMIT HERE (e.g., stop after page 5)
+    const PREVIEW_LIMIT = 5; 
+    const url = "./lift-the-stigma-ph.pdf"; 
+
     const canvas = document.getElementById("pdf-canvas");
     const ctx = canvas.getContext("2d");
 
-     let pdfDoc = null;
-  let pageNum = 1;
-  const scale = 1.5;
+    let pdfDoc = null;
+    let pageNum = 1;
+    let isLocked = false;
 
-  pdfjsLib.getDocument(url).promise.then(function(pdf) {
-    pdfDoc = pdf;
-    renderPage();
-  });
+    // 2. PREVENT RIGHT-CLICK SAVING ON THE CANVAS
+    canvas.addEventListener('contextmenu', event => event.preventDefault());
 
-  function renderPage() {
-    pdfDoc.getPage(pageNum).then(function(page) {
-      const viewport = page.getViewport({ scale });
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-
-      const renderContext = {
-        canvasContext: ctx,
-        viewport: viewport
-      };
-
-      page.render(renderContext);
-      document.getElementById("page-info").textContent = `Page ${pageNum} of ${pdfDoc.numPages}`;
+    // Render the PDF
+    pdfjsLib.getDocument(url).promise.then(function(pdf) {
+      pdfDoc = pdf;
+      renderPage();
     });
-  }
 
-  document.getElementById("nextBtn").addEventListener("click", () => {
-    if (pageNum < pdfDoc.numPages) {
-      pageNum++;
-      renderPage();
-    }
-  });
+    function renderPage() {
+      pdfDoc.getPage(pageNum).then(function(page) {
+        
+        // Use a dynamic scale to fit screens
+        const containerWidth = document.querySelector('.canvas-container').clientWidth;
+        const baseViewport = page.getViewport({ scale: 1.0 });
+        const scale = containerWidth / baseViewport.width;
+        const viewport = page.getViewport({ scale: scale });
 
-  document.getElementById("prevBtn").addEventListener("click", () => {
-    if (pageNum > 1) {
-      pageNum--;
-      renderPage();
-    }
-  });
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
 
-// Keyboard arrow key navigation
-document.addEventListener("keydown", function(event) {
-  if (event.key === "ArrowRight") {
-    // Next page
-    if (pageNum < pdfDoc.numPages) {
-      pageNum++;
-      renderPage();
-    }
-  } else if (event.key === "ArrowLeft") {
-    // Previous page
-    if (pageNum > 1) {
-      pageNum--;
-      renderPage();
-    }
-  }
-});
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
 
-</script>
+        page.render(renderContext);
+        document.getElementById("page-info").textContent = `Page ${pageNum} of ${pdfDoc.numPages}`;
+      });
+    }
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      if (pageNum < pdfDoc.numPages) {
+        if (pageNum >= PREVIEW_LIMIT) {
+          triggerLock();
+        } else {
+          pageNum++;
+          renderPage();
+        }
+      }
+    });
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      if (pageNum > 1) {
+        pageNum--;
+        renderPage();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener("keydown", function(event) {
+      if (isLocked) return; // Disable keys if locked
+      
+      if (event.key === "ArrowRight") {
+        if (pageNum < pdfDoc.numPages) {
+          if (pageNum >= PREVIEW_LIMIT) {
+            triggerLock();
+          } else {
+            pageNum++;
+            renderPage();
+          }
+        }
+      } else if (event.key === "ArrowLeft") {
+        if (pageNum > 1) {
+          pageNum--;
+          renderPage();
+        }
+      }
+    });
+
+    // 3. THE LOCK FUNCTION
+    function triggerLock() {
+      isLocked = true;
+      document.getElementById("locked").style.display = "flex";
+    }
+
+  </script>
 </body>
 </html>
