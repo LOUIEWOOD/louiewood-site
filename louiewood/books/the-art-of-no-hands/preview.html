@@ -6,7 +6,6 @@
   <title>Preview – The Art of No Hands</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Added Playfair Display for the Paywall header -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -161,16 +160,15 @@
   </div>
 
   <div id="locked" class="overlay" style="display:none;">
-    <h2>Preview Limit Reached</h2>
-    <p>You have reached the end of the free sample. To continue reading the full manuscript, please secure your copy.</p>
+    <h2>End of Free Preview</h2>
+    <p>You have reached the end of Chapter 1. To continue reading the full manuscript, please secure your copy.</p>
     
     <!-- YOUR GUMROAD LINK -->
     <a href="https://louiewood.gumroad.com/l/gaokxq" target="_blank">Access the Full PDF (₱1799)</a>
   </div>
 
   <script>
-    let PREVIEW_LIMIT = 5; 
-    // CHANGED TO POINT TO YOUR NEW PREVIEW FILE
+    // POINT THIS TO YOUR PREVIEW PDF
     const url = "./the-art-of-no-hands-preview.pdf"; 
 
     const canvas = document.getElementById("pdf-canvas");
@@ -186,10 +184,6 @@
 
     pdfjsLib.getDocument(url).promise.then(function(pdf) {
       pdfDoc = pdf;
-      
-      // AUTO-CALCULATE 15% LIMIT
-      PREVIEW_LIMIT = Math.max(3, Math.ceil(pdfDoc.numPages * 0.15)); 
-      
       renderPage();
     });
 
@@ -225,13 +219,12 @@
     }
 
     nextBtn.addEventListener("click", () => {
-      if (pageNum < pdfDoc.numPages) {
-        if (pageNum >= PREVIEW_LIMIT) {
-          triggerLock();
-        } else {
-          pageNum++;
-          renderPage();
-        }
+      // If we are on the last page of the preview, trigger the lock
+      if (pageNum >= pdfDoc.numPages) {
+        triggerLock();
+      } else {
+        pageNum++;
+        renderPage();
       }
     });
 
@@ -245,10 +238,8 @@
     document.addEventListener("keydown", function(event) {
       if (isLocked) return; 
       if (event.key === "ArrowRight") {
-        if (pageNum < pdfDoc.numPages) {
-          if (pageNum >= PREVIEW_LIMIT) { triggerLock(); } 
-          else { pageNum++; renderPage(); }
-        }
+        if (pageNum >= pdfDoc.numPages) { triggerLock(); } 
+        else { pageNum++; renderPage(); }
       } else if (event.key === "ArrowLeft") {
         if (pageNum > 1) { pageNum--; renderPage(); }
       }
