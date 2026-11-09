@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Art of No Hands | LOUIEWOOD</title>
+  <title>Lift The Stigma PH | LOUIEWOOD</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,11 +19,7 @@
       --accent-color: #ffffff;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -33,12 +29,8 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
-    /* NAVIGATION */
     nav {
       display: flex;
       justify-content: space-between;
@@ -49,24 +41,10 @@
       backdrop-filter: blur(10px);
     }
 
-    .logo {
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: 2px;
-    }
+    .logo { font-weight: 700; font-size: 20px; letter-spacing: 2px; }
+    .nav-links a { font-size: 14px; color: var(--text-muted); margin-left: 30px; }
+    .nav-links a:hover { color: var(--text-main); }
 
-    .nav-links a {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-left: 30px;
-      transition: color 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--text-main);
-    }
-
-    /* PRODUCT SECTION */
     .product-container {
       max-width: 1100px;
       margin: 80px auto;
@@ -77,85 +55,125 @@
       align-items: center;
     }
 
-    /* LEFT SIDE: 3D PHYSICAL BOOK VISUAL */
+    /* =========================================
+       THE PERFECT 3D SPINNING BOOK
+       ========================================= */
     .book-visual {
       flex: 1 1 400px;
       display: flex;
       justify-content: center;
-      perspective: 2000px; 
-      padding: 40px 0;
+      align-items: center;
+      perspective: 2500px; 
+      padding: 60px 0;
     }
 
-    .book-3d {
+    .book-box {
       position: relative;
-      width: 100%;
-      max-width: 340px;
-      cursor: pointer;
-      transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      width: 320px;
+      height: 480px;
       transform-style: preserve-3d;
-      transform: rotateX(20deg) rotateY(-15deg) translateZ(0px);
+      /* Tilt so we can see the spine and the pages */
+      transform: rotateX(15deg) rotateY(-20deg);
+      animation: spin 15s infinite linear;
     }
 
-    .book-cover-front {
+    .book-box:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes spin {
+      from { transform: rotateX(15deg) rotateY(-20deg); }
+      to { transform: rotateX(15deg) rotateY(340deg); }
+    }
+
+    /* 1. The Front Cover */
+    .book-front {
+      position: absolute;
       width: 100%;
-      display: block;
-      border-radius: 2px 5px 5px 2px; 
-      box-shadow: inset 2px 0 5px rgba(255,255,255,0.1);
-      position: relative;
+      height: 100%;
+      /* YOUR NEW FRONT COVER LINK */
+      background-image: url('https://res.cloudinary.com/noykxs5v/image/upload/v1794227854/Front_cover_z5hrhk.png');
+      background-size: cover;
+      background-position: center;
+      border-radius: 2px 6px 6px 2px; 
+      transform: translateZ(4px); 
+      box-shadow: inset 4px 0 15px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.9);
+      backface-visibility: hidden;
+      z-index: 3;
+    }
+
+    /* 2. The Back Cover */
+    .book-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      /* YOUR NEW BACK COVER LINK */
+      background-image: url('https://res.cloudinary.com/noykxs5v/image/upload/v1794227862/Back_Cover_h26imb.png');
+      background-size: cover;
+      background-position: center;
+      border-radius: 6px 2px 2px 6px;
+      transform: rotateY(180deg) translateZ(4px);
+      box-shadow: inset -4px 0 15px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.9);
+      backface-visibility: hidden;
       z-index: 2;
     }
 
+    /* 3. The Spine (Thickness) */
     .book-spine {
       position: absolute;
       top: 0;
-      left: 0;
-      width: 30px; 
+      left: -4px; 
+      width: 8px; 
       height: 100%;
-      background: linear-gradient(to right, #1a1a1a, #333333, #1a1a1a);
-      transform: rotateY(-90deg) translateX(-15px);
-      transform-origin: left center;
-      border-radius: 3px 0 0 3px;
-      z-index: 1;
-      border-left: 2px solid #000; 
+      /* YOUR NEW SPINE LINK */
+      background-image: url('https://res.cloudinary.com/noykxs5v/image/upload/v1794228007/spine_nctlru.jpg');
+      background-size: cover;
+      background-position: center;
+      transform: rotateY(-90deg);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+      z-index: 3;
     }
 
+    /* 4. The White Pages (Right Edge) */
     .book-pages {
       position: absolute;
-      top: 2%;
-      right: 0;
-      width: 25px;
-      height: 96%;
-      background: #e8e8e8;
-      transform: rotateY(90deg) translateX(12px);
-      transform-origin: right center;
-      border-radius: 0 3px 3px 0;
+      top: 2px;
+      right: -4px;
+      width: 8px;
+      height: calc(100% - 4px);
+      background: #fdfdfd;
+      background-image: repeating-linear-gradient(to bottom, #eee, #fff 2px, #eee 3px);
+      transform: rotateY(90deg);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
       z-index: 1;
-      background-image: repeating-linear-gradient(to bottom, #ddd, #fff 2px, #ddd 3px);
     }
 
-    .book-shadow {
+    /* TOP PAGES */
+    .book-top {
       position: absolute;
-      bottom: -30px;
-      left: 10%;
-      width: 90%;
-      height: 20px;
-      background: rgba(0, 0, 0, 0.8);
-      filter: blur(15px);
-      transform: rotateX(90deg) translateZ(-20px);
-      z-index: 0;
-      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      top: -4px;
+      left: 2px;
+      width: calc(100% - 4px);
+      height: 8px;
+      background: #fdfdfd;
+      background-image: repeating-linear-gradient(to right, #eee, #fff 2px, #eee 3px);
+      transform: rotateX(90deg);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+      z-index: 1;
     }
 
-    .book-3d:hover {
-      transform: rotateX(0deg) rotateY(0deg) translateZ(20px);
-    }
-
-    .book-3d:hover .book-shadow {
-      width: 70%;
-      left: 15%;
-      opacity: 0.5;
-      filter: blur(10px);
-      transform: rotateX(90deg) translateZ(-10px);
+    /* BOTTOM PAGES */
+    .book-bottom {
+      position: absolute;
+      bottom: -4px;
+      left: 2px;
+      width: calc(100% - 4px);
+      height: 8px;
+      background: #fdfdfd;
+      background-image: repeating-linear-gradient(to right, #eee, #fff 2px, #eee 3px);
+      transform: rotateX(-90deg);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+      z-index: 1;
     }
 
     /* RIGHT SIDE: DETAILS & BUY */
@@ -186,7 +204,6 @@
       line-height: 1.7;
     }
 
-    /* THE BUY BOX */
     .buy-box {
       border: 1px solid var(--border-color);
       background: var(--surface-color);
@@ -202,11 +219,7 @@
       margin-bottom: 20px;
     }
 
-    .price {
-      font-size: 32px;
-      font-weight: 600;
-    }
-
+    .price { font-size: 32px; font-weight: 600; }
     .format-label {
       font-size: 12px;
       color: var(--text-muted);
@@ -231,29 +244,17 @@
       transition: background 0.2s ease;
     }
 
-    .buy-btn:hover {
-      background: #cccccc;
-    }
+    .buy-btn:hover { background: #cccccc; }
 
-    /* SECONDARY LINKS */
-    .secondary-links {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
+    .secondary-links { display: flex; gap: 20px; flex-wrap: wrap; }
     .secondary-btn {
       font-size: 14px;
       color: var(--text-muted);
       text-decoration: underline;
       transition: color 0.2s ease;
     }
+    .secondary-btn:hover { color: var(--text-main); }
 
-    .secondary-btn:hover {
-      color: var(--text-main);
-    }
-
-    /* FOOTER */
     footer {
       padding: 60px 5%;
       border-top: 1px solid var(--border-color);
@@ -261,33 +262,18 @@
       margin-top: 100px;
     }
 
-    .footer-info {
-      font-size: 13px;
-      color: #555;
-      margin-bottom: 10px;
-    }
+    .footer-info { font-size: 13px; color: #555; margin-bottom: 10px; }
 
     @media (max-width: 768px) {
-      .product-container {
-        flex-direction: column;
-        margin: 40px auto;
-      }
-      .book-visual {
-        width: 100%;
-      }
-      nav {
-        flex-direction: column;
-        gap: 15px;
-      }
-      .nav-links a {
-        margin: 0 10px;
-      }
+      .product-container { flex-direction: column; margin: 40px auto; }
+      .book-visual { width: 100%; transform: scale(0.7); }
+      nav { flex-direction: column; gap: 15px; }
+      .nav-links a { margin: 0 10px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVIGATION -->
   <nav>
     <div class="logo"><a href="/">LOUIEWOOD</a></div>
     <div class="nav-links">
@@ -296,53 +282,50 @@
     </div>
   </nav>
 
-  <!-- PRODUCT CONTAINER -->
   <div class="product-container">
     
-    <!-- LEFT: 3D PHYSICAL BOOK -->
+    <!-- LEFT: 3D SPINNING BOOK -->
     <div class="book-visual">
-      <div class="book-3d">
+      
+      <div class="book-box">
+        <div class="book-front"></div>
+        <div class="book-back"></div>
         <div class="book-spine"></div>
         <div class="book-pages"></div>
-        
-        <!-- IMAGE LINK FOR THE ART OF NO HANDS -->
-        <img src="https://res.cloudinary.com/noykxs5v/image/upload/v1784905046/Front_cover_g9hgh1.png" alt="The Art of No Hands" class="book-cover-front">
-        
-        <div class="book-shadow"></div>
+        <div class="book-top"></div>
+        <div class="book-bottom"></div>
       </div>
+
     </div>
 
     <!-- RIGHT: DETAILS -->
     <div class="book-details">
-      <h1 class="book-title">The Art of No Hands</h1>
+      <h1 class="book-title">Lift The Stigma PH</h1>
       <span class="book-author">By Francis Louie Ramoso</span>
       
       <p class="description">
-        This is not a passive self-help lecture—it is an uncompromised, high-velocity blueprint for radical autonomy, sovereign living, and high-stakes execution. <br><br>
-        Written by Francis Louie Ramoso—software engineer, digital architect, and pioneer of the high-speed FRANCISGLIDE movement—this book bridges the raw physics of hands-free motorcycle mastery with the deep engineering of human potential.
+        A raw, real, unapologetic story. <br><br>
+        <em>Lift The Stigma</em> is not just a book — it’s a movement. A bold, unapologetic voice rising from the heart of the Philippines, exposing the truth behind the war on cannabis, the politics of prohibition, and the people who’ve been crushed by it for far too long.
       </p>
 
-      <!-- THE BUY BOX -->
       <div class="buy-box">
         <div class="price-row">
-          <span class="price">₱1799</span>
+          <span class="price">₱99.99</span>
           <span class="format-label">Digital PDF</span>
         </div>
         
-        <!-- GUMROAD LINK ADDED HERE -->
-        <a href="https://louiewood.gumroad.com/l/gaokxq" target="_blank" class="buy-btn">Access the Manuscript</a>
+        <!-- YOUR GUMROAD LINK FOR LIFT THE STIGMA -->
+        <a href="https://louiewood.gumroad.com/l/umyiz" target="_blank" class="buy-btn">Access the Manuscript</a>
       </div>
 
-      <!-- SECONDARY OPTIONS -->
       <div class="secondary-links">
         <a href="preview.html" class="secondary-btn">Read a Free Preview</a>
-        <a href="https://www.lulu.com/shop/francis-louie-ramoso/the-art-of-no-hands/paperback/product-w4ggp56.html" target="_blank" class="secondary-btn">Buy Paperback on Lulu</a>
+        <a href="https://www.lulu.com/shop/francis-louie-ramoso/lift-the-stigma-ph/paperback/product-45yjdk9.html" target="_blank" class="secondary-btn">Buy Paperback on Lulu</a>
       </div>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-info">
       Secure checkout via GCash, Maya, or Credit Card.
