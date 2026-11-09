@@ -6,7 +6,8 @@
   <title>Preview – The Art of No Hands</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Added Playfair Display for the Paywall header -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
@@ -163,13 +164,14 @@
     <h2>Preview Limit Reached</h2>
     <p>You have reached the end of the free sample. To continue reading the full manuscript, please secure your copy.</p>
     
-    <!-- REPLACE # WITH YOUR GUMROAD LINK FOR THIS BOOK -->
-    <a href="#" target="_blank">Access the Full PDF (₱1799)</a>
+    <!-- YOUR GUMROAD LINK -->
+    <a href="https://louiewood.gumroad.com/l/gaokxq" target="_blank">Access the Full PDF (₱1799)</a>
   </div>
 
   <script>
     let PREVIEW_LIMIT = 5; 
-    const url = "./the-art-of-no-hands.pdf"; 
+    // CHANGED TO POINT TO YOUR NEW PREVIEW FILE
+    const url = "./the-art-of-no-hands-preview.pdf"; 
 
     const canvas = document.getElementById("pdf-canvas");
     const ctx = canvas.getContext("2d");
