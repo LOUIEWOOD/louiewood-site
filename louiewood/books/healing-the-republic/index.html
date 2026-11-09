@@ -86,7 +86,6 @@
       padding: 40px 0;
     }
 
-    /* The wrapper that handles the 3D transforms */
     .book-3d {
       position: relative;
       width: 100%;
@@ -94,12 +93,9 @@
       cursor: pointer;
       transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
       transform-style: preserve-3d;
-      
-      /* LAYING DOWN STATE (Default) */
       transform: rotateX(20deg) rotateY(-15deg) translateZ(0px);
     }
 
-    /* The actual front cover image */
     .book-cover-front {
       width: 100%;
       display: block;
@@ -109,7 +105,6 @@
       z-index: 2;
     }
 
-    /* The Fake Spine (Creates the thickness) */
     .book-spine {
       position: absolute;
       top: 0;
@@ -124,7 +119,6 @@
       border-left: 2px solid #000; 
     }
 
-    /* The Fake Pages (Shows the right edge of the book) */
     .book-pages {
       position: absolute;
       top: 2%;
@@ -139,7 +133,6 @@
       background-image: repeating-linear-gradient(to bottom, #ddd, #fff 2px, #ddd 3px);
     }
 
-    /* The Base Shadow on the table */
     .book-shadow {
       position: absolute;
       bottom: -30px;
@@ -153,7 +146,6 @@
       transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    /* HOVER EFFECT: Stand the book up */
     .book-3d:hover {
       transform: rotateX(0deg) rotateY(0deg) translateZ(20px);
     }
@@ -313,7 +305,7 @@
         <div class="book-spine"></div>
         <div class="book-pages"></div>
         
-        <!-- IMAGE LINK FOR HEALING THE REPUBLIC -->
+        <!-- IMAGE LINK -->
         <img src="https://res.cloudinary.com/dhk6otbuh/image/upload/v1780417420/Healing_the_Republic_Front_cover_wxqw0c.png" alt="Healing The Republic" class="book-cover-front">
         
         <div class="book-shadow"></div>
@@ -339,13 +331,13 @@
           <span class="format-label">Digital PDF</span>
         </div>
         
-        <!-- GUMROAD LINK ADDED HERE -->
-        <a href="https://louiewood.gumroad.com/l/scuucv" target="_blank" class="buy-btn">Access the Blueprint</a>
+        <!-- YOUR GUMROAD LINK -->
+        <a href="https://louiewood.gumroad.com/l/scuucv" target="_blank" class="buy-btn">Access the Manuscript</a>
       </div>
 
       <!-- SECONDARY OPTIONS -->
       <div class="secondary-links">
-        <a href="https://play.google.com/store/books/details?id=_YbjEQAAQBAJ" target="_blank" class="secondary-btn">Read on Google Play</a>
+        <a href="preview.html" class="secondary-btn">Read a Free Preview</a>
         <a href="https://www.lulu.com/shop/francis-louie-ramoso/healing-the-republic-a-cold-blueprint-for-philippine-renewal/hardcover/product-45d2wgd.html" target="_blank" class="secondary-btn">Buy Hardcover on Lulu</a>
       </div>
     </div>
