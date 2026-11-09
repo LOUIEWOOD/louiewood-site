@@ -82,12 +82,10 @@
       flex: 1 1 400px;
       display: flex;
       justify-content: center;
-      /* Increased perspective for a more dramatic 3D effect */
       perspective: 2000px; 
       padding: 40px 0;
     }
 
-    /* The wrapper that handles the 3D transforms */
     .book-3d {
       position: relative;
       width: 100%;
@@ -95,41 +93,32 @@
       cursor: pointer;
       transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
       transform-style: preserve-3d;
-      
-      /* LAYING DOWN STATE (Default) */
-      /* Tilted back and rotated slightly to show the spine */
       transform: rotateX(20deg) rotateY(-15deg) translateZ(0px);
     }
 
-    /* The actual front cover image */
     .book-cover-front {
       width: 100%;
       display: block;
-      border-radius: 2px 5px 5px 2px; /* Slight rounding on the right edge for pages */
-      /* Inset shadow makes the edges look like a real hardcover */
+      border-radius: 2px 5px 5px 2px; 
       box-shadow: inset 2px 0 5px rgba(255,255,255,0.1);
       position: relative;
       z-index: 2;
     }
 
-    /* The Fake Spine (Creates the thickness) */
     .book-spine {
       position: absolute;
       top: 0;
       left: 0;
-      width: 30px; /* Adjust thickness here */
+      width: 30px; 
       height: 100%;
       background: linear-gradient(to right, #1a1a1a, #333333, #1a1a1a);
-      /* Transform the spine to sit on the left edge at a 90-degree angle */
       transform: rotateY(-90deg) translateX(-15px);
       transform-origin: left center;
       border-radius: 3px 0 0 3px;
       z-index: 1;
-      /* Add a subtle line to look like a hinge */
       border-left: 2px solid #000; 
     }
 
-    /* The Fake Pages (Shows the right edge of the book) */
     .book-pages {
       position: absolute;
       top: 2%;
@@ -137,16 +126,13 @@
       width: 25px;
       height: 96%;
       background: #e8e8e8;
-      /* Transform pages to sit on the right edge at a 90-degree angle */
       transform: rotateY(90deg) translateX(12px);
       transform-origin: right center;
       border-radius: 0 3px 3px 0;
       z-index: 1;
-      /* Gradient to simulate stacked paper */
       background-image: repeating-linear-gradient(to bottom, #ddd, #fff 2px, #ddd 3px);
     }
 
-    /* The Base Shadow on the table */
     .book-shadow {
       position: absolute;
       bottom: -30px;
@@ -160,12 +146,10 @@
       transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    /* HOVER EFFECT: Stand the book up */
     .book-3d:hover {
       transform: rotateX(0deg) rotateY(0deg) translateZ(20px);
     }
 
-    /* Shadow gets smaller when the book stands up */
     .book-3d:hover .book-shadow {
       width: 70%;
       left: 15%;
@@ -318,13 +302,12 @@
     <!-- LEFT: 3D PHYSICAL BOOK -->
     <div class="book-visual">
       <div class="book-3d">
-        <!-- Fake Spine -->
         <div class="book-spine"></div>
-        <!-- Fake Pages -->
         <div class="book-pages"></div>
-        <!-- The Front Cover Image -->
+        
+        <!-- IMAGE LINK -->
         <img src="https://res.cloudinary.com/dhk6otbuh/image/upload/v1754473864/ChatGPT_Image_Aug_4_2025_01_12_58_PM_xcmxzm.png" alt="Breaking Free From Spiritual Control" class="book-cover-front">
-        <!-- Shadow on the table -->
+        
         <div class="book-shadow"></div>
       </div>
     </div>
@@ -346,8 +329,8 @@
           <span class="format-label">Digital PDF</span>
         </div>
         
-        <!-- REPLACE # WITH YOUR PAYMONGO LINK LATER -->
-        <a href="#" class="buy-btn">PDF EDITION IN VAULT</a>
+        <!-- REPLACE # WITH YOUR GUMROAD LINK -->
+        <a href="#" target="_blank" class="buy-btn">Access the Manuscript</a>
       </div>
 
       <!-- SECONDARY OPTIONS -->
