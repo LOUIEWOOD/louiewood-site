@@ -50,6 +50,7 @@
       background: #fff;
       width: 100%; 
       max-width: 900px; 
+      margin-bottom: 40px; /* Added margin at the bottom to replace the text space */
     }
 
     canvas {
@@ -86,15 +87,6 @@
       button.left { left: 10px; }
       button.right { right: 10px; }
       button.nav { width: 40px; height: 40px; font-size: 18px; }
-    }
-
-    #page-info {
-      font-size: 13px;
-      color: #888;
-      margin-top: 20px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 600;
     }
 
     .overlay {
@@ -156,12 +148,12 @@
       <button id="prevBtn" class="nav left" disabled>❮</button>
       <button id="nextBtn" class="nav right">❯</button>
     </div>
-    <div id="page-info">Page 1</div>
+    <!-- REMOVED THE PAGE INFO DIV HERE -->
   </div>
 
   <div id="locked" class="overlay" style="display:none;">
     <h2>End of Free Preview</h2>
-    <p>You have reached the end of Chapter 1. To continue reading the full manuscript, please secure your copy.</p>
+    <p>You have reached the end of the free sample. To continue reading the full manuscript, please secure your copy.</p>
     
     <!-- YOUR GUMROAD LINK -->
     <a href="https://louiewood.gumroad.com/l/gaokxq" target="_blank">Access the Full PDF (₱1799)</a>
@@ -213,13 +205,12 @@
 
         page.render(renderContext);
         
-        document.getElementById("page-info").textContent = `Page ${pageNum} of ${pdfDoc.numPages}`;
+        // REMOVED THE JAVASCRIPT THAT UPDATES THE TEXT
         prevBtn.disabled = (pageNum === 1);
       });
     }
 
     nextBtn.addEventListener("click", () => {
-      // If we are on the last page of the preview, trigger the lock
       if (pageNum >= pdfDoc.numPages) {
         triggerLock();
       } else {
